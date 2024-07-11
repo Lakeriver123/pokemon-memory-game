@@ -1,0 +1,18 @@
+FETCH card images/names from API
+SET cards to []
+STORE images/names/key in cards
+CREATE eventlisteners for clicking on cards
+DISPLAY cards on page
+
+set highScore to 0
+set currentScore to 0
+SET pickedCards to []
+STORE picked card key in []
+CHECK if picked card key already exists in pickedCards
+    if (picked) 
+    currentScore = 0
+    else currentScore += 1
+
+Check if highScore < currentScore
+    if true
+    highScore = currentScore
