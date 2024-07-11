@@ -28,3 +28,8 @@
     align-items: center;
     margin-top: 100px;
   }
+
+.score {
+  text-align: center;
+  font-weight: bold;
+}

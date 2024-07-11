@@ -25,34 +25,38 @@ function GenerateGameBoard() {
       setPickedPokemon([...pickedPokemon, pokemon.id]);
       setResetGameBoard(prevState => !prevState); // Toggle resetGameBoard to fetch new Pokemon
       console.log(`Nice memory! You picked a new Pokémon! ${pokemon.name}!`);
-      setCurrentScore(currentScore + 1);
-      console.log(`Current Score: ${currentScore + 1}`);
-      if (highScore < currentScore) {
-        setHighScore(currentScore + 1);
-        console.log(`New High Score: ${currentScore + 1}`);
-      } else {
-        console.log(`Current High Score: ${highScore + 1}`);
-      }
+      
+      // Update current score and high score using functional updates
+      setCurrentScore(prevScore => {
+        const newScore = prevScore + 1;
+        if (newScore > highScore) {
+          setHighScore(newScore); // Update high score if new score is higher
+        }
+        return newScore; // Return updated current score
+      });
+  
     } else {
       console.log(`You already picked ${pokemon.name}! Your current score has been reset`);
       setCurrentScore(0);
     }
   };
 
-
   return (
-    <div className="pokemonBoard">
-      {pokemonData.map(pokemon => (
-        <div key={pokemon.id} className="pokemonCard">
-          <img
-            src={pokemon.sprites?.front_default || ''}
-            alt={`Image of ${pokemon.name}`}
-            className="pokemonImage"
-            onClick={() => handlePokemonClick(pokemon)}
-          />
-          <p className="pokemonName">{pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</p>
-        </div>
-      ))}
+    <div className='scoreAndPokemonBoardContainer'>
+      <p className='score'>Current Score: {currentScore} || High Score: {highScore}</p>
+      <div className="pokemonBoard"> 
+        {pokemonData.map(pokemon => (
+          <div key={pokemon.id} className="pokemonCard">
+            <img
+              src={pokemon.sprites?.front_default || ''}
+              alt={`Image of ${pokemon.name}`}
+              className="pokemonImage"
+              onClick={() => handlePokemonClick(pokemon)}
+            />
+            <p className="pokemonName">{pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
